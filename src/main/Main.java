@@ -15,9 +15,10 @@ public class Main {
         frame.add(gamePanel);
         frame.pack();
 
-        
         frame.setLocationRelativeTo(null); //se place au centre de l'ecran
         frame.setVisible(true);
+
+        gamePanel.launchGame();
     }
 
 }
