@@ -1,5 +1,9 @@
 package main;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Graphics2D;
+
 public class PlayManager {
 
     //Main Play Area
@@ -17,6 +21,24 @@ public class PlayManager {
         right_x = left_x + WIDTH;
         top_y = 50;
         bottom_y = top_y + HEIGHT; 
+    }
+
+    public void update(){
+        
+    }
+
+    public void draw (Graphics2D g2) {
+        
+        //Draw Play Area Frame
+        g2.setColor(Color.WHITE);
+        g2.setStroke(new BasicStroke(4f));
+        g2.drawRect(left_x-4, top_y-4, WIDTH+8, HEIGHT+8);
+
+        //Draw Next Mino Frame
+        int x = right_x + 100;
+        int y = bottom_y - 200;
+
+        g2.drawRect(x, y, 200, 200);
     }
     
 }

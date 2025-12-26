@@ -3,6 +3,7 @@ package main;
 import java.awt.Color;
 import javax.swing.JPanel;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 public class GamePanel extends JPanel implements Runnable {
     
@@ -10,6 +11,7 @@ public class GamePanel extends JPanel implements Runnable {
     public static final int HEIGHT = 720;
     final int FPS = 60;
     Thread gameThread;
+    PlayManager pm;
 
     public GamePanel() {
 
@@ -17,6 +19,8 @@ public class GamePanel extends JPanel implements Runnable {
         this.setPreferredSize(new java.awt.Dimension(WIDTH, HEIGHT));
         this.setBackground(Color.BLACK);
         this.setLayout(null);
+    
+        pm = new PlayManager();
     }
 
     public void launchGame() {
@@ -26,7 +30,7 @@ public class GamePanel extends JPanel implements Runnable {
 
 
     public void run() {
-        
+
         //Game loop
         double drawInterval = 1000000000 / FPS; // 0.01666667 secondes
         double delta = 0;
@@ -49,12 +53,14 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update() {
         // TODO Auto-generated method stub
-        
+        pm.update();
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         // TODO Auto-generated method stub
         
+        Graphics2D g2 = (Graphics2D)g; 
+        pm.draw(g2);
     }
 }
