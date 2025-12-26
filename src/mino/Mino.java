@@ -1,19 +1,21 @@
 package mino;
 
 import java.awt.Graphics2D;
-import java.lang.management.PlatformLoggingMXBean;
+import java.awt.Color;
 
 import main.KeyHandle;
 import main.PlayManager;
 
-import java.awt.Color;
 
 //superclass du dossier mino
 public class Mino {
 
     public Block     b[] = new Block[4];
     public Block tempB[] = new Block[4];
+
     int autoDropCounter = 0;
+
+    public int direction = 1; //4 directions existe (1/2/3/4)
 
     public void create(Color c){
         
@@ -28,15 +30,34 @@ public class Mino {
     }
 
     public void setXY(int x, int y){}
+    public void updateXY(int direction){
+        this.direction = direction;
+        b[0].x = tempB[0].x;
+        b[0].y = tempB[0].y;
+        b[1].x = tempB[1].x;
+        b[1].y = tempB[1].y;
+        b[2].x = tempB[2].x;
+        b[2].y = tempB[2].y;
+        b[3].x = tempB[3].x;
+        b[3].y = tempB[3].y;
+    }
 
-    
-    public void updateXY(int direction){}
+    public void getDirection1(){}
+    public void getDirection2(){}
+    public void getDirection3(){}
+    public void getDirection4(){}
     
     public void update() {
 
         // Move the Mino / déplacement du mino avec les touches
         if (KeyHandle.upPressed) {
-            
+            switch (direction) {
+                case 1 -> getDirection1();
+                case 2 -> getDirection2();
+                case 3 -> getDirection3();
+                case 4 -> getDirection4();
+            }
+            KeyHandle.upPressed = false;
         }
         if (KeyHandle.leftPressed) {
             b[0].x -= Block.SIZE; // on fait decendre de 1 chaque morceau du mino et reset le count
