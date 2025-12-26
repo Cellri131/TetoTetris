@@ -2,7 +2,9 @@ package main;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 
 public class PlayManager {
 
@@ -37,8 +39,12 @@ public class PlayManager {
         //Draw Next Mino Frame
         int x = right_x + 100;
         int y = bottom_y - 200;
-
         g2.drawRect(x, y, 200, 200);
+        g2.setFont(new Font("Arial", Font.PLAIN, 30));
+        g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        g2.drawString("NEXT", x+60, y+60);
+
+
     }
     
 }
