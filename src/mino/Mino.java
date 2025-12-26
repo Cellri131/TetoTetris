@@ -1,6 +1,10 @@
 package mino;
 
 import java.awt.Graphics2D;
+import java.lang.management.PlatformLoggingMXBean;
+
+import main.PlayManager;
+
 import java.awt.Color;
 
 //superclass du dossier mino
@@ -28,7 +32,15 @@ public class Mino {
     public void updateXY(int direction){}
     
     public void update() {
-        autoDropCounter++; //the counter increases in every frame
+        autoDropCounter++; //the counter increases in every frame / le compteur augmente pour chaque frame
+        if (autoDropCounter == PlayManager.dropInterval) {
+            //the Mino goes down / le block vas ver le bas
+            b[0].y += Block.SIZE; // on fait decendre de 1 chaque morceau du mino
+            b[1].y += Block.SIZE;
+            b[2].y += Block.SIZE;
+            b[3].y += Block.SIZE;
+            autoDropCounter = 0;
+        }
     }
 
     public void draw(Graphics2D g2) {
