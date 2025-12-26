@@ -3,6 +3,7 @@ package mino;
 import java.awt.Graphics2D;
 import java.lang.management.PlatformLoggingMXBean;
 
+import main.KeyHandle;
 import main.PlayManager;
 
 import java.awt.Color;
@@ -32,6 +33,39 @@ public class Mino {
     public void updateXY(int direction){}
     
     public void update() {
+
+        // Move the Mino / déplacement du mino avec les touches
+        if (KeyHandle.upPressed) {
+            
+        }
+        if (KeyHandle.leftPressed) {
+            b[0].x -= Block.SIZE; // on fait decendre de 1 chaque morceau du mino et reset le count
+            b[1].x -= Block.SIZE;
+            b[2].x -= Block.SIZE;
+            b[3].x -= Block.SIZE;
+        
+            KeyHandle.leftPressed = false;
+        }
+        if (KeyHandle.downPressed) {
+            b[0].y += Block.SIZE; // on fait decendre de 1 chaque morceau du mino et reset le count
+            b[1].y += Block.SIZE;
+            b[2].y += Block.SIZE;
+            b[3].y += Block.SIZE;
+
+            autoDropCounter = 0;
+
+            KeyHandle.downPressed = false;
+        }
+        if (KeyHandle.rightPressed) {
+            b[0].x += Block.SIZE; // on fait decendre de 1 chaque morceau du mino et reset le count
+            b[1].x += Block.SIZE;
+            b[2].x += Block.SIZE;
+            b[3].x += Block.SIZE;
+            
+            KeyHandle.rightPressed = false;
+        }
+
+
         autoDropCounter++; //the counter increases in every frame / le compteur augmente pour chaque frame
         if (autoDropCounter == PlayManager.dropInterval) {
             //the Mino goes down / le block vas ver le bas

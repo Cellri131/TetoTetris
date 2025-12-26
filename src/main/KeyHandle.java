@@ -23,10 +23,10 @@ public class KeyHandle implements KeyListener{
             leftPressed  = true;
 
         if(code == KeyEvent.VK_S)
-            rightPressed = true;
+            downPressed = true;
 
         if(code == KeyEvent.VK_D)
-            downPressed  = true;
+            rightPressed  = true;
     }
 
     @Override
