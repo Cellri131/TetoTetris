@@ -51,11 +51,17 @@ public class Mino {
 
         // Move the Mino / déplacement du mino avec les touches
         if (KeyHandle.upPressed) {
+            
+            direction++;
+            if (direction>4)
+                direction=1;
+            
+            System.out.print("test Z");
             switch (direction) {
-                case 1 -> getDirection1();
-                case 2 -> getDirection2();
-                case 3 -> getDirection3();
-                case 4 -> getDirection4();
+                case 1: getDirection1();break;
+                case 2: getDirection2();break;
+                case 3: getDirection3();break;
+                case 4: getDirection4();break;
             }
             KeyHandle.upPressed = false;
         }
