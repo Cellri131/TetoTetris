@@ -6,10 +6,11 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
+import java.awt.RenderingHints.Key;
 import java.util.Random;
 
-import mino.Block;
 //import interne au projet
+import mino.Block;
 import mino.Mino;
 import mino.Mino_Bar;
 import mino.Mino_L1;
@@ -92,17 +93,26 @@ public class PlayManager {
         g2.setStroke(new BasicStroke(4f));
         g2.drawRect(left_x-4, top_y-4, WIDTH+8, HEIGHT+8);
 
-        //Draw Next Mino Frame
+        //Draw Next Mino Frame / affichage de la fenetre du Mino d'après
         int x = right_x + 100;
         int y = bottom_y - 200;
         g2.drawRect(x, y, 200, 200);
         g2.setFont(new Font("Arial", Font.PLAIN, 30));
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
-        g2.drawString("NEXT", x+60, y+60);
+        g2.drawString("SUIVANT", x+35, y+60);
 
-        //draw the currentMino
+        //draw the currentMino / affichage du Mino actuel
         if(currentMino != null)
             currentMino.draw(g2);
+
+        //draw pause / affichage de pause
+        g2.setColor(Color.yellow);
+        g2.setFont(g2.getFont().deriveFont(50f));
+        if (KeyHandle.pausePressed) {
+            x = left_x + 90;
+            y = top_y + 320;
+            g2.drawString("PAUSE", x, y);
+        }
     }
     
 }
