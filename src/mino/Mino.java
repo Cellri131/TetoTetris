@@ -70,7 +70,7 @@ public class Mino {
             if(b[i].x == PlayManager.bottom_y)
                 bottomCollision = true;
     }
-    
+
     public void checkRotationCollision(){}
     
     public void update() {
@@ -81,8 +81,7 @@ public class Mino {
             direction++;
             if (direction>4)
                 direction=1;
-            
-            System.out.print("test Z");
+        
             switch (direction) {
                 case 1: getDirection1();break;
                 case 2: getDirection2();break;
@@ -91,30 +90,43 @@ public class Mino {
             }
             KeyHandle.upPressed = false;
         }
+
+        checkMovementCollision();
+
         if (KeyHandle.leftPressed) {
-            b[0].x -= Block.SIZE; // on fait decendre de 1 chaque morceau du mino et reset le count
-            b[1].x -= Block.SIZE;
-            b[2].x -= Block.SIZE;
-            b[3].x -= Block.SIZE;
+            //if the Mino's left part is not hitting it can go do/ si la gauche morceau dépasse pas
+            if(leftCollision == false) {
+                b[0].x -= Block.SIZE; // on fait decendre de 1 chaque morceau du mino et reset le count
+                b[1].x -= Block.SIZE;
+                b[2].x -= Block.SIZE;
+                b[3].x -= Block.SIZE;
+            }
         
             KeyHandle.leftPressed = false;
         }
-        if (KeyHandle.downPressed) {
-            b[0].y += Block.SIZE; // on fait decendre de 1 chaque morceau du mino et reset le count
-            b[1].y += Block.SIZE;
-            b[2].y += Block.SIZE;
-            b[3].y += Block.SIZE;
 
-            autoDropCounter = 0;
+        if (KeyHandle.downPressed) {
+            //same but for down case / mm chose pour le bas
+            if(bottomCollision == false) {
+                b[0].y += Block.SIZE; // on fait decendre de 1 chaque morceau du mino et reset le count
+                b[1].y += Block.SIZE;
+                b[2].y += Block.SIZE;
+                b[3].y += Block.SIZE;
+
+                autoDropCounter = 0;
+            }
 
             KeyHandle.downPressed = false;
         }
+
         if (KeyHandle.rightPressed) {
-            b[0].x += Block.SIZE; // on fait decendre de 1 chaque morceau du mino et reset le count
-            b[1].x += Block.SIZE;
-            b[2].x += Block.SIZE;
-            b[3].x += Block.SIZE;
-            
+            if(rightCollision == false) {
+                b[0].x += Block.SIZE; // on fait decendre de 1 chaque morceau du mino et reset le count
+                b[1].x += Block.SIZE;
+                b[2].x += Block.SIZE;
+                b[3].x += Block.SIZE;
+            }
+
             KeyHandle.rightPressed = false;
         }
 
