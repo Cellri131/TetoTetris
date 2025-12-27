@@ -17,6 +17,8 @@ public class Mino {
 
     public int direction = 1; //4 directions existe (1/2/3/4)
 
+    boolean leftCollision, rightCollision, bottomCollision;
+
     public void create(Color c){
         
         b    [0] = new Block(c);
@@ -46,6 +48,30 @@ public class Mino {
     public void getDirection2(){}
     public void getDirection3(){}
     public void getDirection4(){}
+
+    public void checkMovementCollision(){
+        leftCollision = false;
+        rightCollision = false;
+        bottomCollision = false;
+
+        //check frame collision / vérification à chaque frame
+        //left wall / mur gauche
+        for(int i = 0; i < b.length; i++)
+            if(b[i].x == PlayManager.left_x)
+                leftCollision = true; //dans ce cas on vérifie se qui se trouve à gauche
+
+        //right wall / mur droit
+        for(int i = 0; i < b.length; i++)
+            if (b[i].x == PlayManager.right_x)
+                rightCollision = true;
+
+        //bottom floor / sol
+        for(int i = 0; i < b.length; i++)
+            if(b[i].x == PlayManager.bottom_y)
+                bottomCollision = true;
+    }
+    
+    public void checkRotationCollision(){}
     
     public void update() {
 
