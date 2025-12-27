@@ -4,6 +4,7 @@ import java.awt.Color;
 import javax.swing.JPanel;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints.Key;
 
 public class GamePanel extends JPanel implements Runnable {
     
@@ -56,8 +57,8 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-        // TODO Auto-generated method stub
-        pm.update();
+        if (KeyHandle.pausePressed == false)
+            pm.update();
     }
 
     public void paintComponent(Graphics g) {
