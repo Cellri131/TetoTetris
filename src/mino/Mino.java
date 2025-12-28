@@ -18,6 +18,7 @@ public class Mino {
     public int direction = 1; //4 directions existe (1/2/3/4)
 
     boolean leftCollision, rightCollision, bottomCollision;
+    public boolean active = true;
 
     public void create(Color c){
         
@@ -55,6 +56,10 @@ public class Mino {
     public void getDirection3(){}
     public void getDirection4(){}
 
+    public void posMino(){
+        System.out.println(b[0].y);
+    }
+
     public void checkMovementCollision(){
         leftCollision = false;
         rightCollision = false;
@@ -63,18 +68,24 @@ public class Mino {
         //check frame collision / vérification à chaque frame
         //left wall / mur gauche
         for(int i = 0; i < b.length; i++)
-            if(b[i].x == PlayManager.left_x)
+            if(b[i].x == PlayManager.left_x) {
                 leftCollision = true; //dans ce cas on vérifie se qui se trouve à gauche
+            // System.out.print("collision bas rotation");
+        }
 
         //right wall / mur droit
         for(int i = 0; i < b.length; i++)
-            if (b[i].x == PlayManager.right_x)
+            if (b[i].x == PlayManager.right_x){
                 rightCollision = true;
+            // System.out.print("collision bas rotation");
+        }
 
         //bottom floor / sol
         for(int i = 0; i < b.length; i++)
-            if(b[i].x == PlayManager.bottom_y)
-                bottomCollision = true;
+            if(b[i].y + Block.SIZE >= PlayManager.bottom_y) {
+                bottomCollision = true; 
+                // System.out.print("collision bas rotation");
+            }
     }
 
     public void checkRotationCollision(){
@@ -95,8 +106,10 @@ public class Mino {
 
         //Bottom floor / sol
         for(int i = 0; i < b.length; i++)
-            if(tempB[i].x + Block.SIZE > PlayManager.bottom_y)
-                bottomCollision = true;
+            if(tempB[i].x + Block.SIZE > PlayManager.bottom_y) {
+                bottomCollision = true; 
+                // System.out.print("collision bas rotation");
+            }
     }
     
     public void update() {
@@ -104,6 +117,8 @@ public class Mino {
         // Move the Mino / déplacement du mino avec les touches
         if (KeyHandle.upPressed) {
             
+            // posMino();
+
             direction++;
             if (direction>4)
                 direction=1;
@@ -120,6 +135,9 @@ public class Mino {
         checkMovementCollision();
 
         if (KeyHandle.leftPressed) {
+
+            // posMino();
+
             //if the Mino's left part is not hitting it can go do/ si la gauche morceau dépasse pas
             if(leftCollision == false) {
                 b[0].x -= Block.SIZE; // on fait decendre de 1 chaque morceau du mino et reset le count
@@ -132,6 +150,9 @@ public class Mino {
         }
 
         if (KeyHandle.downPressed) {
+
+            // posMino();
+
             //same but for down case / mm chose pour le bas
             if(bottomCollision == false) {
                 b[0].y += Block.SIZE; // on fait decendre de 1 chaque morceau du mino et reset le count
@@ -146,6 +167,9 @@ public class Mino {
         }
 
         if (KeyHandle.rightPressed) {
+
+            // posMino();
+
             if(rightCollision == false) {
                 b[0].x += Block.SIZE; // on fait decendre de 1 chaque morceau du mino et reset le count
                 b[1].x += Block.SIZE;
@@ -156,15 +180,17 @@ public class Mino {
             KeyHandle.rightPressed = false;
         }
 
-
-        autoDropCounter++; //the counter increases in every frame / le compteur augmente pour chaque frame
-        if (autoDropCounter == PlayManager.dropInterval) {
-            //the Mino goes down / le block vas ver le bas
-            b[0].y += Block.SIZE; // on fait decendre de 1 chaque morceau du mino
-            b[1].y += Block.SIZE;
-            b[2].y += Block.SIZE;
-            b[3].y += Block.SIZE;
-            autoDropCounter = 0;
+        if (bottomCollision) {active = false;}
+        else {  
+            autoDropCounter++; //the counter increases in every frame / le compteur augmente pour chaque frame
+            if (autoDropCounter == PlayManager.dropInterval) {
+                //the Mino goes down / le block vas ver le bas
+                b[0].y += Block.SIZE; // on fait decendre de 1 chaque morceau du mino
+                b[1].y += Block.SIZE;
+                b[2].y += Block.SIZE;
+                b[3].y += Block.SIZE;
+                autoDropCounter = 0;
+            }
         }
     }
 

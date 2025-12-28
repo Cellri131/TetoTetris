@@ -45,7 +45,8 @@ public class PlayManager {
         left_x = (GamePanel.WIDTH/2) - (WIDTH/2); //1280/2 - 360/2 = 460
         right_x = left_x + WIDTH;
         top_y = 50;
-        bottom_y = top_y + HEIGHT; 
+        bottom_y = top_y + HEIGHT;
+        System.out.print(bottom_y);
 
         MINO_START_X = left_x + (WIDTH/2) - Block.SIZE;
         MINO_START_Y = top_y  + Block.SIZE;
