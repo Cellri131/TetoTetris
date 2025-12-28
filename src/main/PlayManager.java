@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.RenderingHints.Key;
+import java.util.ArrayList;
 import java.util.Random;
 
 //import interne au projet
@@ -35,6 +36,12 @@ public class PlayManager {
     Mino currentMino;
     final int MINO_START_X;
     final int MINO_START_Y;
+    
+    //Next Mino
+    Mino nextMino;
+    final int NEXTMINO_X;
+    final int NEXTMINO_Y;
+    public static ArrayList<Block> staticBlocks = new ArrayList<>();
 
     //Other
     public static int dropInterval = 60; //mino drops in every 60 frames
@@ -50,6 +57,11 @@ public class PlayManager {
 
         MINO_START_X = left_x + (WIDTH/2) - Block.SIZE;
         MINO_START_Y = top_y  + Block.SIZE;
+
+        NEXTMINO_X = right_x + 175;
+        NEXTMINO_Y = top_y + 500;
+        nextMino = pickMino();
+        nextMino.setXY(NEXTMINO_X, NEXTMINO_Y);
 
         //test
         // currentMino = new Mino_L1     ();
@@ -105,6 +117,9 @@ public class PlayManager {
         //draw the currentMino / affichage du Mino actuel
         if(currentMino != null)
             currentMino.draw(g2);
+
+        //draw the nextMino
+        nextMino.draw(g2);
 
         //draw pause / affichage de pause
         g2.setColor(Color.yellow);
