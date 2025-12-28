@@ -196,11 +196,49 @@ public class Mino {
 
     public void draw(Graphics2D g2) {
 
-        int margin = 2;
-        g2.setColor(b[0].c);
-        g2.fillRect(b[0].x+margin, b[0].y+margin, Block.SIZE-(margin*2), Block.SIZE-(margin*2));
-        g2.fillRect(b[1].x+margin, b[1].y+margin, Block.SIZE-(margin*2), Block.SIZE-(margin*2));
-        g2.fillRect(b[2].x+margin, b[2].y+margin, Block.SIZE-(margin*2), Block.SIZE-(margin*2));
-        g2.fillRect(b[3].x+margin, b[3].y+margin, Block.SIZE-(margin*2), Block.SIZE-(margin*2));
+        int margin = 4;
+        int edge = 8;
+        for (int i = 0; i < b.length; i++) {
+            // Draw main square
+            g2.setColor(b[i].c);
+            g2.fillRect(b[i].x + margin, b[i].y + margin, Block.SIZE - margin * 2, Block.SIZE - margin * 2);
+
+            // Calculate lighter and darker colors
+            Color lighter = b[i].c.brighter();
+            Color darker = b[i].c.darker();
+
+            // Top edge (lighter)
+            g2.setColor(lighter);
+            g2.fillPolygon(
+                new int[]{b[i].x, b[i].x + Block.SIZE, b[i].x + Block.SIZE - edge, b[i].x + edge},
+                new int[]{b[i].y, b[i].y, b[i].y + edge, b[i].y + edge},
+                4
+            );
+            // Left edge (lighter)
+            g2.setColor(lighter);
+            g2.fillPolygon(
+                new int[]{b[i].x, b[i].x + edge, b[i].x + edge, b[i].x},
+                new int[]{b[i].y, b[i].y + edge, b[i].y + Block.SIZE - edge, b[i].y + Block.SIZE},
+                4
+            );
+            // Bottom edge (darker)
+            g2.setColor(darker);
+            g2.fillPolygon(
+                new int[]{b[i].x, b[i].x + Block.SIZE, b[i].x + Block.SIZE - edge, b[i].x + edge},
+                new int[]{b[i].y + Block.SIZE, b[i].y + Block.SIZE, b[i].y + Block.SIZE - edge, b[i].y + Block.SIZE - edge},
+                4
+            );
+            // Right edge (darker)
+            g2.setColor(darker);
+            g2.fillPolygon(
+                new int[]{b[i].x + Block.SIZE, b[i].x + Block.SIZE, b[i].x + Block.SIZE - edge, b[i].x + Block.SIZE - edge},
+                new int[]{b[i].y, b[i].y + Block.SIZE, b[i].y + Block.SIZE - edge, b[i].y + edge},
+                4
+            );
+
+            // Draw border
+            g2.setColor(Color.BLACK);
+            g2.drawRect(b[i].x, b[i].y, Block.SIZE, Block.SIZE);
+        }
     }
 }
