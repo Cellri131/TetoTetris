@@ -103,6 +103,8 @@ public class PlayManager {
             staticBlocks.add(currentMino.b[1]);
             staticBlocks.add(currentMino.b[2]);
             staticBlocks.add(currentMino.b[3]);
+
+            currentMino.deactivating = false;
         
             //replace the currentMino with the nextMino / on le remplace par un nouveau
             currentMino = nextMino;

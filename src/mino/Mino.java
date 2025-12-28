@@ -20,6 +20,9 @@ public class Mino {
     boolean leftCollision, rightCollision, bottomCollision;
     public boolean active = true;
 
+    public boolean deactivating;
+    int deactivateCounter = 0;
+
     public void create(Color c){
         
         b    [0] = new Block(c);
@@ -65,6 +68,9 @@ public class Mino {
         rightCollision = false;
         bottomCollision = false;
 
+        //check static block collision / vérification si il y a un block en dessous qui lui pose pb
+        checkStaticBlockCollision();
+
         //check frame collision / vérification à chaque frame
         //left wall / mur gauche
         for(int i = 0; i < b.length; i++)
@@ -93,6 +99,9 @@ public class Mino {
         rightCollision = false;
         bottomCollision = false;
 
+        //check static block collision / vérification si il y a un block en dessous qui lui pose pb
+        checkStaticBlockCollision();
+
         //Check frame collision / vérification à chaque frame
         //Left wall / mur gauche
         for(int i = 0; i < b.length; i++)
@@ -112,7 +121,35 @@ public class Mino {
             }
     }
     
+    private void checkStaticBlockCollision(){
+        for(int i = 0; i < PlayManager.staticBlocks.size(); i++) {
+            int targetX  = PlayManager.staticBlocks.get(i).x;
+            int targetY  = PlayManager.staticBlocks.get(i).y;
+
+            //check down / vérification par rapport au sol
+            for(int ii = 0; ii < b.length; ii++) {
+                if(b[ii].y + Block.SIZE == targetY && b[ii].x == targetX)
+                    bottomCollision = true;
+            }
+
+            //check left / vérification par rapport au contenu à gauche
+            for(int ii = 0; ii < b.length; ii++) {
+                if(b[ii].x - Block.SIZE == targetX && b[ii].y == targetY)
+                    leftCollision = true;
+            }
+
+            //check right / vérification par rapport au contenu à droite
+            for(int ii = 0; ii < b.length; ii++) {
+                if(b[ii].x + Block.SIZE == targetX && b[ii].y == targetY)
+                    rightCollision = true;
+            }
+        }
+    }
+
     public void update() {
+
+        if(deactivating)
+            deactivating();
 
         // Move the Mino / déplacement du mino avec les touches
         if (KeyHandle.upPressed) {
@@ -180,7 +217,7 @@ public class Mino {
             KeyHandle.rightPressed = false;
         }
 
-        if (bottomCollision) {active = false;}
+        if (bottomCollision) {deactivating = true;}
         else {  
             autoDropCounter++; //the counter increases in every frame / le compteur augmente pour chaque frame
             if (autoDropCounter == PlayManager.dropInterval) {
@@ -191,6 +228,20 @@ public class Mino {
                 b[3].y += Block.SIZE;
                 autoDropCounter = 0;
             }
+        }
+    }
+
+    private void deactivating() {
+        deactivateCounter++;
+
+        //wait 45 frames until diactivate
+        if(deactivateCounter == 25) {
+            
+            deactivateCounter = 0;
+            checkMovementCollision(); //check if the bottom is still hitting
+
+            //if the bottom is still hitting after 45 frames, deactivate the mino
+            if(bottomCollision){active = false;}
         }
     }
 
