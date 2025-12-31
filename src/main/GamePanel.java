@@ -13,6 +13,8 @@ public class GamePanel extends JPanel implements Runnable {
     final int FPS = 60;
     Thread gameThread;
     PlayManager pm;
+    public boolean paused = false;
+    public ControlConfigPanel configPanel;
 
     public GamePanel() {
 
@@ -22,10 +24,24 @@ public class GamePanel extends JPanel implements Runnable {
         this.setLayout(null);
 
         //Implement KeyListener
-        this.addKeyListener(new KeyHandle());
+        this.addKeyListener(new KeyHandle(this));
         this.setFocusable(true);
-    
+
         pm = new PlayManager();
+        pm.setGamePanel(this);
+
+        // Panel de configuration des touches
+        configPanel = new ControlConfigPanel();
+        configPanel.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                setPaused(false);
+            }
+            @Override
+            public void windowClosed(java.awt.event.WindowEvent e) {
+                setPaused(false);
+            }
+        });
     }
 
     public void launchGame() {
@@ -49,7 +65,9 @@ public class GamePanel extends JPanel implements Runnable {
             lastTime = currentTime;
 
             if (delta >= 1) {
-                update();
+                if (!paused) {
+                    update();
+                }
                 repaint();
                 delta--;
             }
@@ -57,7 +75,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-        if (KeyHandle.pausePressed == false)
+        if (!paused)
             pm.update();
     }
 
@@ -67,5 +85,16 @@ public class GamePanel extends JPanel implements Runnable {
         
         Graphics2D g2 = (Graphics2D)g; 
         pm.draw(g2);
+    }
+
+    public void setPaused(boolean value) {
+        paused = value;
+        if (!paused) {
+            configPanel.setVisible(false);
+        }
+    }
+
+    public void showConfigPanel() {
+        configPanel.setVisible(true);
     }
 }

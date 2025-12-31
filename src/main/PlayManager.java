@@ -23,6 +23,7 @@ import mino.Mino_Z2;
 
 
 public class PlayManager {
+    private GamePanel gamePanel;
 
     //Main Play Area
     final int WIDTH = 360;
@@ -63,18 +64,13 @@ public class PlayManager {
         nextMino = pickMino();
         nextMino.setXY(NEXTMINO_X, NEXTMINO_Y);
 
-        //test
-        // currentMino = new Mino_L1     ();
-        // currentMino = new Mino_L2     ();
-        // currentMino = new Mino_Squarre();
-        // currentMino = new Mino_Bar    ();
-        // currentMino = new Mino_T      ();
-        // currentMino = new Mino_Z1     ();
-        // currentMino = new Mino_Z2     ();  
-        
         //Set the starting Mino
         currentMino = pickMino();
         currentMino.setXY(MINO_START_X, MINO_START_Y);
+    }
+
+    public void setGamePanel(GamePanel panel) {
+        this.gamePanel = panel;
     }
 
     private Mino pickMino() {
@@ -145,7 +141,7 @@ public class PlayManager {
         //draw pause / affichage de pause
         g2.setColor(Color.yellow);
         g2.setFont(g2.getFont().deriveFont(50f));
-        if (KeyHandle.pausePressed) {
+        if (gamePanel != null && gamePanel.paused) {
             x = left_x + 90;
             y = top_y + 320;
             g2.drawString("PAUSE", x, y);

@@ -6,7 +6,6 @@ import java.awt.Color;
 import main.KeyHandle;
 import main.PlayManager;
 
-
 //superclass du dossier mino
 public class Mino {
 
