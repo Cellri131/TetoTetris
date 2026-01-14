@@ -47,6 +47,8 @@ public class PlayManager {
     //Other
     public static int dropInterval = 60; //mino drops in every 60 frames
 
+    
+
     public PlayManager(){
 
         //Main Play Area Frame
@@ -107,9 +109,59 @@ public class PlayManager {
             currentMino.setXY(MINO_START_X, MINO_START_Y);
             nextMino = pickMino();
             nextMino.setXY(NEXTMINO_X, NEXTMINO_Y);
+        
+            //when a line is full we delete it / on supprime la ligne si elle est pleine
+            checkDelete();
         }
         else
             currentMino.update();
+    }
+
+    private void checkDelete(){
+        int x = left_x;
+        int y = top_y;
+        int blockCount = 0;
+
+        while (x < right_x && y < bottom_y) {
+
+            for(int i = 0; i < staticBlocks.size(); i++){
+                if (staticBlocks.get(i).x == x && staticBlocks.get(i).y == y) {
+                    //increse the count if there a static block / augmentation du conteur
+                    blockCount++;
+                    
+                }
+            }
+
+            x += Block.SIZE;
+
+            if ( x >= right_x) {
+
+                //if the BlockCount hits 12, that mean the current y line is filled with block
+                //so we can delet it
+                if (blockCount == 12) {
+                    for(int i = staticBlocks.size()-1; i > -1; i--){
+                        //remove all the block from the line
+                        if (staticBlocks.get(i).y == y) {
+                            staticBlocks.remove(i);
+                        }
+                    }
+
+                    for(int i = 0; i < staticBlocks.size(); i++){
+                        //if a block is above the current y, move it down by the block size
+                        if (staticBlocks.get(i).y < y) {
+                            staticBlocks.get(i).y += Block.SIZE;
+                        }
+                    }
+
+
+                }
+
+                blockCount = 0;
+                x = left_x;
+                y += Block.SIZE;
+            }
+            
+        }
     }
 
     public void draw (Graphics2D g2) {

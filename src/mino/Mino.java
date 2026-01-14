@@ -80,7 +80,7 @@ public class Mino {
 
         //right wall / mur droit
         for(int i = 0; i < b.length; i++)
-            if (b[i].x == PlayManager.right_x){
+            if (b[i].x + Block.SIZE >= PlayManager.right_x){
                 rightCollision = true;
             // System.out.print("collision bas rotation");
         }
