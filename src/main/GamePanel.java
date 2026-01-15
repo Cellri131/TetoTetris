@@ -75,7 +75,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-        if (!paused)
+        if (!paused && !pm.gameOver)
             pm.update();
     }
 
