@@ -166,8 +166,6 @@ public class PlayManager {
                             staticBlocks.get(i).y += Block.SIZE;
                         }
                     }
-
-
                 }
 
                 blockCount = 0;
@@ -233,6 +231,13 @@ public class PlayManager {
             y = top_y + 320;
             g2.drawString("PAUSE", x, y);
         }
+
+        //draw the game title / titre du jeu
+        x = 170;
+        y = top_y + 320;
+        g2.setColor(Color.white);
+        g2.setFont(new Font("Times New Roman", Font.ITALIC, 60));
+        g2.drawString("Tetris", x, y);
     }
     
 }
