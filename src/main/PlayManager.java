@@ -170,6 +170,20 @@ public class PlayManager {
 
                     lineCount++;
                     lines++;
+                    //drop speed / vitesse de décente
+                    //if the line score hits a certain number, increase the drop speed / la vitesse augmente par rapport au score
+                    //1 is the fastest / 1 et la vitesse max
+                    if (lines % 10 == 0 && dropInterval > 1) {
+
+                        level++;
+                        if (dropInterval > 10) {
+                            dropInterval -= 10;
+                        }
+                        else {
+                            dropInterval -= 1;
+                        }
+                        
+                    }
 
                     for(int i = 0; i < staticBlocks.size(); i++){
                         //if a block is above the current y, move it down by the block size
@@ -209,7 +223,7 @@ public class PlayManager {
 
         //draw the Score Frame
         g2.drawRect(x, top_y, 250, 300);
-        x += 40;
+        x += 25;
         y = top_y + 90;
         g2.drawString("LEVEL: "  + level,  x, y); y += 70;
         g2.drawString("LIGNES: " + lines,  x, y); y += 70;
