@@ -48,9 +48,15 @@ public class PlayManager {
     public static int dropInterval = 60; //mino drops in every 60 frames
     boolean gameOver;
 
+    //effect
     boolean effectCounterOn;
     int effectCounter;
     ArrayList<Integer> effectY = new ArrayList<>();
+
+    //Score
+    int level = 1;
+    int lines;
+    int scores;
 
     public PlayManager(){
 
@@ -128,9 +134,11 @@ public class PlayManager {
     }
 
     private void checkDelete(){
+
         int x = left_x;
         int y = top_y;
         int blockCount = 0;
+        int lineCount = 0;
 
         while (x < right_x && y < bottom_y) {
 
@@ -160,6 +168,9 @@ public class PlayManager {
                         }
                     }
 
+                    lineCount++;
+                    lines++;
+
                     for(int i = 0; i < staticBlocks.size(); i++){
                         //if a block is above the current y, move it down by the block size
                         if (staticBlocks.get(i).y < y) {
@@ -172,7 +183,12 @@ public class PlayManager {
                 x = left_x;
                 y += Block.SIZE;
             }
-            
+        }
+
+        //Add Score
+        if (lineCount > 0) {
+            int simpleLineScore = 10 + level;
+            scores += simpleLineScore + lineCount;
         }
     }
 
@@ -190,6 +206,14 @@ public class PlayManager {
         g2.setFont(new Font("Arial", Font.PLAIN, 30));
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         g2.drawString("SUIVANT", x+35, y+60);
+
+        //draw the Score Frame
+        g2.drawRect(x, top_y, 250, 300);
+        x += 40;
+        y = top_y + 90;
+        g2.drawString("LEVEL: "  + level,  x, y); y += 70;
+        g2.drawString("LIGNES: " + lines,  x, y); y += 70;
+        g2.drawString("SCORES: " + scores, x, y);
 
         //draw the currentMino / affichage du Mino actuel
         if(currentMino != null)
